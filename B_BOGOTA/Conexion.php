@@ -2,11 +2,11 @@
 
 ini_set('memory_limit', '2048M'); // Aumenta el límite de memoria
 
-$servidor = "localhost"; 
+$servidor = "db"; 
 $usuario = "root"; 
-$clave = ""; // Si tienes contraseña, colócala aquí
+$clave = "root"; // Si tienes contraseña, colócala aquí
 $base_datos = "banco_virtual"; 
-$puerto = 3307; // Especificamos el puerto correcto
+$puerto = 3306; // Especificamos el puerto correcto
 
 $conexion = new mysqli($servidor, $usuario, $clave, $base_datos, $puerto);
 

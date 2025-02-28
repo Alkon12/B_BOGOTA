@@ -86,6 +86,26 @@
             claveInput.type = (claveInput.type === "password") ? "text" : "password";
         }
     </script>
-
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('error') === '1') {
+            // Crea el mensaje de error
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = "Usuario o clave incorrectos.";
+            errorMessage.style.color = "red";
+            errorMessage.style.fontWeight = "bold";
+            errorMessage.style.textAlign = "center";
+            errorMessage.style.marginBottom = "1rem";
+            
+            // Inserta el mensaje en una posición visible, por ejemplo, encima del formulario
+            const card = document.querySelector('.login-container .card');
+            if (card) {
+                card.insertAdjacentElement('afterbegin', errorMessage);
+            }
+        }
+    });
+    </script>
+    
 </body>
 </html>

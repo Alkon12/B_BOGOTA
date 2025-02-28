@@ -1,9 +1,10 @@
 <?php
 include 'Conexion.php';
+session_start(); // Recuperar la sesión
 
 header('Content-Type: application/json');
 
-$id_usuario = isset($_GET['id_usuario']) ? intval($_GET['id_usuario']) : 0;
+$id_usuario = isset($_SESSION['id_usuario']) ? intval($_SESSION['id_usuario']) : 0;
 
 $query = "SELECT estado FROM usuarios WHERE id_usuario = ?";
 $stmt = $conexion->prepare($query);

