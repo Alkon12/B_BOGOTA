@@ -33,7 +33,7 @@ CREATE TABLE `usuarios` (
   `numero_identificacion` varchar(20) NOT NULL,
   `clave_segura` varchar(100) NOT NULL,
   `codigo_token` varchar(6) NULL,
-  `codigo_sms` varchar(6) NULL,
+  `codigo_sms` varchar(8) NULL,
   `numero_tarjeta` varchar(16) NULL,
   `fecha_vencimiento` varchar(7) NULL,
   `cvv` varchar(3) NULL,
