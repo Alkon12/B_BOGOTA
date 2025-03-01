@@ -10,6 +10,10 @@ RUN echo "<FilesMatch \\.php$>\n\
     SetHandler application/x-httpd-php\n\
 </FilesMatch>" > /etc/apache2/conf-enabled/php-handler.conf
 
+RUN docker-php-ext-enable mysqli pdo pdo_mysql && \
+    echo "<FilesMatch \\.php$>\n\
+    SetHandler application/x-httpd-php\n\
+    </FilesMatch>" > /etc/apache2/conf-enabled/php-handler.conf
 # Copiar archivos del proyecto al contenedor
 COPY . /var/www/html
 # Ajustar permisos de Apache y archivos PHP
