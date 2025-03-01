@@ -1,13 +1,13 @@
-version: '3.8'
+version: "3.8"
 
 services:
   web:
-    build: .  # IMPORTANTE: Asegura que esté configurado para construir desde la raíz
+    build: . # IMPORTANTE: Asegura que esté configurado para construir desde la raíz
     container_name: mi_proyecto_php
     volumes:
       - .:/var/www/html
     ports:
-      - "8080:80"
+      - "8080:8080"
     depends_on:
       - db
 
